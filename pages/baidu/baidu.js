@@ -1,5 +1,5 @@
 var bmap = require('../../libs/bmap-wx.js');
-var wxMarkerData = [];
+var markersData = []
 Page({
     data: {
         markers: [],
@@ -14,8 +14,8 @@ Page({
     makertap: function (e) {
         var that = this;
         var id = e.markerId;
-        that.showSearchInfo(wxMarkerData, id);
-        that.changeMarkerColor(wxMarkerData, id);
+        that.showSearchInfo(markersData, id);
+        that.changeMarkerColor(markersData, id);
     },
     onLoad: function () {
         var that = this
@@ -43,31 +43,31 @@ Page({
             console.log(data)
         };
         var success = function (data) {
-            wxMarkerData = data.wxMarkerData;
+            markersData = data.wxMarkerData;
             that.setData({
-                markers: wxMarkerData
+                markers: markersData
             });
             that.setData({
-                latitude: wxMarkerData[0].latitude
+                latitude: markersData[0].latitude
             });
             that.setData({
-                longitude: wxMarkerData[0].longitude
+                longitude: markersData[0].longitude
             });
         }
-        // 发起POI检索请求 
+        // 发起POI检索请求
         this.data.BMap.search({
             "query": '酒店',
             fail: fail,
             success: success,
-            // 此处需要在相应路径放置图片文件 
+            // 此处需要在相应路径放置图片文件
             iconPath: '../../image/marker_red.png',
-            // 此处需要在相应路径放置图片文件 
+            // 此处需要在相应路径放置图片文件
             iconTapPath: '../../image/marker_red.png'
         });
     },
     showSearchInfo: function (data, i) {
         var that = this;
-        console.log(data)
+        console.log("百度",data)
         that.setData({
             placeData: {
                 title: '名称：' + data[i].title + '\n',
@@ -81,10 +81,10 @@ Page({
         var markers = [];
         for (var j = 0; j < data.length; j++) {
             if (j == i) {
-                // 此处需要在相应路径放置图片文件 
+                // 此处需要在相应路径放置图片文件
                 data[j].iconPath = "../../image/marker_yellow.png";
             } else {
-                // 此处需要在相应路径放置图片文件 
+                // 此处需要在相应路径放置图片文件
                 data[j].iconPath = "../../image/marker_red.png";
             }
             markers.push(data[j]);

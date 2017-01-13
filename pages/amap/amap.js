@@ -18,7 +18,9 @@ Page({
   },
   onLoad: function () {
     var that = this;
-    this.setData({AMap:new amapFile.AMapWX({ key: 'ea889682997a181fd6678d9aaf23693a' })}) ;
+    this.setData({AMap:new amapFile.AMapWX({
+       key: 'ea889682997a181fd6678d9aaf23693a'
+     })})
 
     wx.getLocation({
       type: 'wgs84',
@@ -27,6 +29,11 @@ Page({
         var longitude = res.longitude
         that.setData({ latitude: latitude, longitude: longitude })
       }
+    })
+  },
+  weather: function () {
+    wx.navigateTo({
+      url: '../amapweather/amapweather'
     })
   },
   onSearch: function () {
@@ -52,14 +59,11 @@ Page({
       }
     })
   },
-  weather: function () {
-    wx.navigateTo({
-      url: '../amapweather/amapweather'
-    })
-  },
+
 
   showMarkerInfo: function (data, i) {
     var that = this;
+    console.log("高德",data)
     that.setData({
       placeData: {
         title: data[i].name,
