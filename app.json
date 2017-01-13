@@ -3,7 +3,8 @@
     "pages/index/index",
     "pages/amap/amap",
     "pages/baidu/baidu",
-    "pages/bdweather/bdweather"
+    "pages/bdweather/bdweather",
+    "pages/amapweather/amapweather"
   ],
   "window": {
     "backgroundTextStyle": "light",

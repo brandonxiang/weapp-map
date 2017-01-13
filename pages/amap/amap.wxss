@@ -1,15 +1,6 @@
-.map_container{
-  position: absolute;
-  top: 0;
-  bottom: 80px;
-  left: 0;
-  right: 0;
-}
-.map{
-  width: 100%;
-  height: 100%;
-}
-.map_text{
+
+
+/*.map_text{
   position: absolute;
   left: 0;
   right: 0;
@@ -26,4 +17,4 @@ text{
 .h1{
   margin: 15px 0;
   font-size:15px;
-}
+}*/
