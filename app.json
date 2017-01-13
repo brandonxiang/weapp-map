@@ -1,12 +1,36 @@
 {
-  "pages":[
+  "pages": [
     "pages/index/index",
-    "pages/logs/logs"
+    "pages/amap/amap",
+    "pages/baidu/baidu",
+    "pages/bdweather/bdweather"
   ],
-  "window":{
-    "backgroundTextStyle":"light",
+  "window": {
+    "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle":"black"
+    "navigationBarTitleText": "新地图",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "腾讯地图",
+        "iconPath": "image/qq.png",
+        "selectedIconPath": "image/qq.png"
+      },
+      {
+        "pagePath": "pages/amap/amap",
+        "text": "高德地图",
+        "iconPath": "image/ali.png",
+        "selectedIconPath": "image/ali.png"
+      },
+      {
+        "pagePath": "pages/baidu/baidu",
+        "text": "百度地图",
+        "iconPath": "image/baidu.png",
+        "selectedIconPath": "image/baidu.png"
+      }
+    ]
   }
 }
