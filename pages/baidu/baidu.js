@@ -82,12 +82,12 @@ Page({
         for (var j = 0; j < data.length; j++) {
             if (j == i) {
                 // 此处需要在相应路径放置图片文件 
-                data[j].iconPath = "../../img/marker_yellow.png";
+                data[j].iconPath = "../../image/marker_yellow.png";
             } else {
                 // 此处需要在相应路径放置图片文件 
-                data[j].iconPath = "../../img/marker_red.png";
+                data[j].iconPath = "../../image/marker_red.png";
             }
-            markers[j](data[j]);
+            markers.push(data[j]);
         }
         that.setData({
             markers: markers
