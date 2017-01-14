@@ -4,6 +4,7 @@
 <view class="btn-group">
 <button type="primary" size="mini"  bindtap="weather">天气</button>
 <button type="primary" size="mini"  bindtap="onSearch">兴趣点</button>
+<button type="primary" size="mini"  bindtap="onRegeo">地址</button>
 </view>
 <view class="place_info">
   <text>{{placeData.title}}</text>

@@ -59,8 +59,34 @@ Page({
       }
     })
   },
-
-
+  onRegeo:function(){
+    var that =this 
+    this.data.AMap.getRegeo({
+      iconPath: "../../image/marker_red.png",
+      iconWidth: 22,
+      iconHeight: 22,
+      success: function(data){
+        that.setData({
+          markers: data
+        });
+        that.setData({
+          latitude: data[0].latitude
+        });
+        that.setData({
+          longitude: data[0].longitude
+        });
+        that.setData({
+          placeData: {
+            title: data[0].name,
+            address: data[0].desc
+          }
+        })
+      },
+      fail: function(info){
+        wx.showModal({title:info.errMsg})
+      }
+    })
+  },
   showMarkerInfo: function (data, i) {
     var that = this;
     console.log("高德",data)

@@ -2,7 +2,6 @@
   <map class="map" id="map" longitude="{{longitude}}" latitude="{{latitude}}" scale="14" show-location="true" markers="{{markers}}" bindmarkertap="makertap"></map>
 </view>
 <view class="btn-group">
-<button type="primary" size="mini"  bindtap="weather">天气</button>
 <button type="primary" size="mini"  bindtap="onSearch">酒店</button>
 </view>
 <view class="place_info">
