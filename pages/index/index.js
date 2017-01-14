@@ -62,6 +62,36 @@ Page({
             iconTapPath: '../../image/marker_red.png'
         })
     },
+    onRegeo: function(){
+      var that = this
+      var fail = function (data) {
+          console.log(data)
+      };
+      var success = function (data) {
+          const wxMarkerData = data.wxMarkerData;
+          that.setData({
+              markers: wxMarkerData
+          });
+          that.setData({
+              latitude: wxMarkerData[0].latitude
+          });
+          that.setData({
+              longitude: wxMarkerData[0].longitude
+          });
+          that.setData({
+              placeData: {
+                  address: '地址：' + wxMarkerData[0].address + '\n'
+              }
+          })
+      }
+      console.log(this.data.QMap)
+      this.data.QMap.regeocoding({
+          fail: fail,
+          success: success,
+          iconPath: '../../image/marker_red.png',
+          iconTapPath: '../../image/marker_red.png'
+      });
+    },
     showSearchInfo: function (data, i) {
         var that = this;
         that.setData({

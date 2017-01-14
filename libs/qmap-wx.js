@@ -177,20 +177,21 @@ class QMapWX {
      *
      * @param {Object} param 检索配置
      * 参数对象结构可以参考
-     * http://lbsyun.baidu.com/index.php?title=webapi/guide/webservice-geocoding
+     * http://lbs.qq.com/webservice_v1/guide-gcoder.html
      */
     regeocoding(param) {
         var that = this;
         param = param || {};
         let regeocodingparam = {
-            coordtype: param["coordtype"] || 'gcj02ll',
-            pois: param["pois"] || 0,
+            coord_type: param["coord_type"] || 5,
+            get_poi: param["get_poi"] || 0,
             output: param["output"] || 'json',
-            ak: that.ak,
-            sn: param["sn"] || '',
-            timestamp: param["timestamp"] || '',
-            ret_coordtype: 'gcj02ll'
+            key: that.key||param["key"],
+            callback: param["callback"]
         };
+        if(param["poi_options"]){
+            regeocodingparam.poi_options = params["poi_options"]
+        }
         let otherparam = {
             iconPath: param["iconPath"],
             iconTapPath: param["iconTapPath"],
@@ -204,7 +205,7 @@ class QMapWX {
         let locationsuccess = function (result) {
             regeocodingparam["location"] = result["latitude"] + ',' + result["longitude"];
             wx.request({
-                url: 'https://api.map.baidu.com/geocoder/v2/',
+                url: 'http://apis.map.qq.com/ws/geocoder/v1/',
                 data: regeocodingparam,
                 header: {
                     "content-type": "application/json"
@@ -222,13 +223,11 @@ class QMapWX {
                         outputRes["wxMarkerData"] = [];
                         outputRes["wxMarkerData"][0] = {
                             id: 0,
-                            latitude: result["latitude"],
-                            longitude: result["longitude"],
-                            address: poiObj["formatted_address"],
+                            latitude: poiObj["location"]["lat"],
+                            longitude: poiObj["location"]["lng"],
+                            address: poiObj["address"],
                             iconPath: otherparam["iconPath"],
                             iconTapPath: otherparam["iconTapPath"],
-                            desc: poiObj["sematic_description"],
-                            business: poiObj["business"],
                             alpha: otherparam["alpha"],
                             width: otherparam["width"],
                             height: otherparam["height"]
@@ -236,8 +235,8 @@ class QMapWX {
                         otherparam.success(outputRes);
                     } else {
                         otherparam.fail({
-                            errMsg: res["message"],
-                            statusCode: res["status"]
+                            errMsg: res["errMsg"],
+                            statusCode: res["statusCode"]
                         });
                     }
                 },
@@ -266,7 +265,7 @@ class QMapWX {
         }
     }
 
-  
+
 
 }
 

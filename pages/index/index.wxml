@@ -3,6 +3,7 @@
 </view>
 <view class="btn-group">
 <button type="primary" size="mini"  bindtap="onSearch">酒店</button>
+<button type="primary" size="mini"  bindtap="onRegeo">地址</button>
 </view>
 <view class="place_info">
   <text>{{placeData.title}}</text>

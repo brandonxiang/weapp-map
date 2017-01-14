@@ -96,7 +96,6 @@ Page({
             console.log(data)
         };
         var success = function (data) {
-            console.log(data.wxMarkerData)
             const wxMarkerData = data.wxMarkerData;
             that.setData({
                 markers: wxMarkerData
@@ -115,7 +114,7 @@ Page({
                 }
             })
         }
-        // 发起regeocoding检索请求 
+        // 发起regeocoding检索请求
         this.data.BMap.regeocoding({
             fail: fail,
             success: success,
