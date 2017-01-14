@@ -1,60 +1,92 @@
-import {getDailyWeather,getNowWeather} from '../../utils/service'
-import {KEY} from '../../utils/key.js'
+import qmap from '../../libs/qmap-wx.js'
+var markersData = []
 
-var city ='shenzhen'
-var unit ='c'
-var lang = 'zh-Hans'
-
-var app = getApp()
 Page({
-  data: {
-    motto: 'Hello World',
-    userInfo: {}
-  },
+    data: {
+        markers: [],
+        latitude: '40.056892',
+        longitude: '116.308022',
+        placeData: {},
+        QMap: {},
+    },
 
-  bindViewTap: function() {
-    // wx.navigateTo({
-    //   url: '../logs/logs'
-    // })
-  },
-  onLoad: function () {
-    console.log('onLoad')
-    var that = this
+    makertap: function (e) {
+        var that = this;
+        var id = e.markerId;
+        that.showSearchInfo(markersData, id);
+        that.changeMarkerColor(markersData, id);
+    },
+    onLoad: function () {
+        var that = this
+        that.setData({
+            QMap: new qmap.QMapWX({
+                key: 'EZ6BZ-3GE3K-PJ5J7-AEPW5-IOMCO-E4F6J'
+            })
+        })
 
-    app.getUserInfo(function(userInfo){
+        wx.getLocation({
+            type: 'wgs84',
+            success: function (res) {
+                var latitude = res.latitude
+                var longitude = res.longitude
+                that.setData({ latitude: latitude, longitude: longitude })
+            }
+        })
+    },
 
-      that.setData({
-        userInfo:userInfo
-      })
-      that.update()
-    })
+    onSearch: function () {
+        var that = this;
+        var fail = function (data) {
+            console.log(data)
+        }
 
-    console.log(KEY)
+        var success = function (data) {
+            markersData = data.wxMarkerData;
+            that.setData({
+                markers: markersData
+            });
+            that.setData({
+                latitude: markersData[0].latitude
+            });
+            that.setData({
+                longitude: markersData[0].longitude
+            });
+        }
 
-    getDailyWeather({
-      data:{
-        key:KEY,
-        location:city,
-        language: lang,
-        unit:unit,
-        start:0,
-        days:3
-      },
-      success:(res)=>{
-        console.log(res)
-      }
-    })
+        this.data.QMap.search({
+            keyword: "酒店",
+            fail: fail,
+            success: success,
+            iconPath: '../../image/marker_red.png',
 
-    getNowWeather({
-      data:{
-        key:KEY,
-        location:city,
-        language:lang,
-        unit:unit,
-      },
-      success: (res)=>{
-        console.log(res)
-      }
-    })
-  }
+            iconTapPath: '../../image/marker_red.png'
+        })
+    },
+    showSearchInfo: function (data, i) {
+        var that = this;
+        that.setData({
+            placeData: {
+                title: '名称：' + data[i].title + '\n',
+                address: '地址：' + data[i].address + '\n',
+                telephone: '电话：' + data[i].telephone
+            }
+        });
+    },
+    changeMarkerColor: function (data, i) {
+        var that = this;
+        var markers = [];
+        for (var j = 0; j < data.length; j++) {
+            if (j == i) {
+                // 此处需要在相应路径放置图片文件
+                data[j].iconPath = "../../image/marker_yellow.png";
+            } else {
+                // 此处需要在相应路径放置图片文件
+                data[j].iconPath = "../../image/marker_red.png";
+            }
+            markers.push(data[j]);
+        }
+        that.setData({
+            markers: markers
+        });
+    }
 })
