@@ -1,3 +1,9 @@
+<view class="section"> 
+  <input placeholder="输入关键字" auto-focus type="text" bindinput="onSuggest"/> 
+</view> 
+<view class="sug_info"> 
+  <text>{{sugData}}</text> 
+</view>
 <view class="map_container"> 
   <map class="map" id="map" longitude="{{longitude}}" latitude="{{latitude}}" scale="14" show-location="true" markers="{{markers}}" bindmarkertap="makertap"></map> 
 </view> 

@@ -7,6 +7,7 @@ Page({
         longitude: '116.308022',
         placeData: {},
         BMap:{},
+        sugData:"",
 
         //ui
         sise: 'mini'
@@ -63,6 +64,28 @@ Page({
             iconPath: '../../image/marker_red.png',
             // 此处需要在相应路径放置图片文件
             iconTapPath: '../../image/marker_red.png'
+        });
+    },
+    onSuggest: function(e){
+      var that =this
+      var fail = function(data) {
+            console.log(data)
+        };
+        var success = function(data) {
+            var sugData = '';
+            for(var i = 0; i < data.result.length; i++) {
+                sugData = sugData + data.result[i].name + '\n';
+            }
+            that.setData({
+                sugData: sugData
+            });
+        }
+        this.data.BMap.suggestion({
+            query: e.detail.value,
+            region: '北京',
+            city_limit: true,
+            fail: fail,
+            success: success
         });
     },
     showSearchInfo: function (data, i) {
