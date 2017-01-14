@@ -6,8 +6,8 @@ Page({
         latitude: '40.056892',
         longitude: '116.308022',
         placeData: {},
-        BMap:{},
-        sugData:"",
+        BMap: {},
+        sugData: "",
 
         //ui
         sise: 'mini'
@@ -20,16 +20,18 @@ Page({
     },
     onLoad: function () {
         var that = this
-        that.setData({BMap:new bmap.BMapWX({
-            ak: 'TGCPu8MSHKem10tW90avn9jsVvM5Nrbf'
-        })})
+        that.setData({
+            BMap: new bmap.BMapWX({
+                ak: 'TGCPu8MSHKem10tW90avn9jsVvM5Nrbf'
+            })
+        })
 
         wx.getLocation({
             type: 'wgs84',
             success: function (res) {
                 var latitude = res.latitude
                 var longitude = res.longitude
-                that.setData({latitude:latitude,longitude:longitude})
+                that.setData({ latitude: latitude, longitude: longitude })
             }
         })
     },
@@ -66,14 +68,14 @@ Page({
             iconTapPath: '../../image/marker_red.png'
         });
     },
-    onSuggest: function(e){
-      var that =this
-      var fail = function(data) {
+    onSuggest: function (e) {
+        var that = this
+        var fail = function (data) {
             console.log(data)
         };
-        var success = function(data) {
+        var success = function (data) {
             var sugData = '';
-            for(var i = 0; i < data.result.length; i++) {
+            for (var i = 0; i < data.result.length; i++) {
                 sugData = sugData + data.result[i].name + '\n';
             }
             that.setData({
@@ -86,6 +88,39 @@ Page({
             city_limit: true,
             fail: fail,
             success: success
+        });
+    },
+    onRegeo: function (e) {
+        var that = this
+        var fail = function (data) {
+            console.log(data)
+        };
+        var success = function (data) {
+            console.log(data.wxMarkerData)
+            const wxMarkerData = data.wxMarkerData;
+            that.setData({
+                markers: wxMarkerData
+            });
+            that.setData({
+                latitude: wxMarkerData[0].latitude
+            });
+            that.setData({
+                longitude: wxMarkerData[0].longitude
+            });
+            that.setData({
+                placeData: {
+                    title: '描述：' + wxMarkerData[0].desc + '\n',
+                    address: '地址：' + wxMarkerData[0].address + '\n',
+                    telephone: '商圈：' + wxMarkerData[0].business
+                }
+            })
+        }
+        // 发起regeocoding检索请求 
+        this.data.BMap.regeocoding({
+            fail: fail,
+            success: success,
+            iconPath: '../../image/marker_red.png',
+            iconTapPath: '../../image/marker_red.png'
         });
     },
     showSearchInfo: function (data, i) {
