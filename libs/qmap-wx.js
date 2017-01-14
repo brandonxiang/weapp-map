@@ -129,27 +129,26 @@ class QMapWX {
      *
      * @param {Object} param 检索配置
      * 参数对象结构可以参考
-     * http://lbsyun.baidu.com/index.php?title=webapi/place-suggestion-api
+     * http://apis.map.qq.com/ws/place/v1/suggestion 
      */
     suggestion(param) {
         var that = this;
         param = param || {};
         let suggestionparam = {
-            query: param["query"] || '',
+            keyword: param["keyword"] || '',
             region: param["region"] || '全国',
-            city_limit: param["city_limit"] || false,
+            region_fix: param["region_fix"]||0,
+            policy : param["policy"]||0,
             output: param["output"] || 'json',
-            ak: that.ak,
-            sn: param["sn"] || '',
-            timestamp: param["timestamp"] || '',
-            ret_coordtype: 'gcj02ll'
+            key: that.key||param["key"],
+            callback:param["callback"]
         };
         let otherparam = {
             success: param["success"] || function () {},
             fail: param["fail"] || function () {}
         };
         wx.request({
-            url: 'https://api.map.baidu.com/place/v2/suggestion',
+            url: 'http://apis.map.qq.com/ws/place/v1/suggestion',
             data: suggestionparam,
             header: {
                 "content-type": "application/json"

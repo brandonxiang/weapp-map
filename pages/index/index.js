@@ -62,6 +62,27 @@ Page({
             iconTapPath: '../../image/marker_red.png'
         })
     },
+    onSuggest:function(e){
+        var that = this
+        var fail = function (data) {
+            console.log(data)
+        };
+        var success = function (data) {
+            var sugData = '';
+            for (var i = 0; i < data.data.length; i++) {
+                sugData = sugData + data.data[i].title + '\n';
+            }
+            that.setData({
+                sugData: sugData
+            });
+        }
+        this.data.QMap.suggestion({
+            keyword: e.detail.value,
+            region: '深圳',
+            fail: fail,
+            success: success
+        });
+    },
     onRegeo: function(){
       var that = this
       var fail = function (data) {
@@ -84,7 +105,6 @@ Page({
               }
           })
       }
-      console.log(this.data.QMap)
       this.data.QMap.regeocoding({
           fail: fail,
           success: success,

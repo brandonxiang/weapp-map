@@ -84,7 +84,7 @@ Page({
         }
         this.data.BMap.suggestion({
             query: e.detail.value,
-            region: '北京',
+            region: '深圳',
             city_limit: true,
             fail: fail,
             success: success
